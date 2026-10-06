@@ -77,6 +77,11 @@ def main():
             check(r[col] in ("TRUE", "FALSE"), f"{who}: {col} must be TRUE or FALSE")
         check(r["classification"] in CLASSIFICATIONS, f"{who}: unknown classification {r['classification']!r}")
         check((ROOT / r["source_transcript"]).is_file(), f"{who}: missing transcript {r['source_transcript']!r}")
+        expected_source = f"transcripts/{r['attempt']} attempt.docx"
+        check(
+            r["source_transcript"] == expected_source,
+            f"{who}: source_transcript is {r['source_transcript']!r}, expected {expected_source!r}",
+        )
         check(r["notes"].strip() != "", f"{who}: notes must not be empty")
 
         if r["primary_answer_available"] == "FALSE":
